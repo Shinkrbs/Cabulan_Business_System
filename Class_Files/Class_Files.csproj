@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AuthService.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\Order.cs" />
@@ -103,7 +104,10 @@
     <Compile Include="Classes\Supplier.cs" />
     <Compile Include="Database\CustomerRepository.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
+    <Compile Include="Database\EmployeeRepository.cs" />
     <Compile Include="Database\OrderRepository.cs" />
+    <Compile Include="Database\OrderService.cs" />
+    <Compile Include="Database\SupplierRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
