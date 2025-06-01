@@ -8,77 +8,77 @@ using MySql.Data.MySqlClient;
 
 namespace Class_Files.Database
 {
-    public class CustomerRepository
+    public class EmployeeRepository
     {
         private DatabaseConnection _db = new DatabaseConnection();
 
-        public void AddCustomer(Customer customer)
+        public void AddEmployee(Employee employee)
         {
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "INSERT INTO Customers (Name, Address, ContactInfo) VALUES (@Name, @Address, @ContactInfo)";
+                string query = "INSERT INTO Employees (Name, Role, ContactInfo) VALUES (@Name, @Role, @ContactInfo)";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Name", customer.Name);
-                    cmd.Parameters.AddWithValue("@Address", customer.Address);
-                    cmd.Parameters.AddWithValue("@ContactInfo", customer.ContactInfo);
+                    cmd.Parameters.AddWithValue("@Name", employee.Name);
+                    cmd.Parameters.AddWithValue("@Role", employee.Role);
+                    cmd.Parameters.AddWithValue("@ContactInfo", employee.ContactInfo);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public List<Customer> GetCustomers()
+        public List<Employee> GetEmployees()
         {
-            List<Customer> customers = new List<Customer>();
+            List<Employee> employees = new List<Employee>();
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT * FROM Customers";
+                string query = "SELECT * FROM Employees";
                 using (var cmd = new MySqlCommand(query, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        customers.Add(new Customer
+                        employees.Add(new Employee
                         {
-                            Id = reader.GetInt32("Id"),
+                            EmpId = reader.GetInt32("EmpId"),
                             Name = reader.GetString("Name"),
-                            Address = reader.GetString("Address"),
+                            Role = reader.GetString("Role"),
                             ContactInfo = reader.GetString("ContactInfo")
                         });
                     }
                 }
             }
-            return customers;
+            return employees;
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void UpdateEmployee(Employee employee)
         {
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "UPDATE Customers SET Name=@Name, Address=@Address, ContactInfo=@ContactInfo WHERE Id=@Id";
+                string query = "UPDATE Employees SET Name=@Name, Role=@Role, ContactInfo=@ContactInfo WHERE EmpId=@EmpId";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", customer.Id);
-                    cmd.Parameters.AddWithValue("@Name", customer.Name);
-                    cmd.Parameters.AddWithValue("@Address", customer.Address);
-                    cmd.Parameters.AddWithValue("@ContactInfo", customer.ContactInfo);
+                    cmd.Parameters.AddWithValue("@EmpId", employee.EmpId);
+                    cmd.Parameters.AddWithValue("@Name", employee.Name);
+                    cmd.Parameters.AddWithValue("@Role", employee.Role);
+                    cmd.Parameters.AddWithValue("@ContactInfo", employee.ContactInfo);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public void DeleteCustomer(int customerId)
+        public void DeleteEmployee(int empId)
         {
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "DELETE FROM Customers WHERE Id=@Id";
+                string query = "DELETE FROM Employees WHERE EmpId=@EmpId";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", customerId);
+                    cmd.Parameters.AddWithValue("@EmpId", empId);
                     cmd.ExecuteNonQuery();
                 }
             }

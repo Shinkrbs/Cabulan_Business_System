@@ -8,39 +8,39 @@ using MySql.Data.MySqlClient;
 
 namespace Class_Files.Database
 {
-    public class CustomerRepository
+    public class SupplierRepository
     {
         private DatabaseConnection _db = new DatabaseConnection();
 
-        public void AddCustomer(Customer customer)
+        public void AddSupplier(Supplier supplier)
         {
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "INSERT INTO Customers (Name, Address, ContactInfo) VALUES (@Name, @Address, @ContactInfo)";
+                string query = "INSERT INTO Suppliers (Name, Address, ContactInfo) VALUES (@Name, @Address, @ContactInfo)";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Name", customer.Name);
-                    cmd.Parameters.AddWithValue("@Address", customer.Address);
-                    cmd.Parameters.AddWithValue("@ContactInfo", customer.ContactInfo);
+                    cmd.Parameters.AddWithValue("@Name", supplier.Name);
+                    cmd.Parameters.AddWithValue("@Address", supplier.Address);
+                    cmd.Parameters.AddWithValue("@ContactInfo", supplier.ContactInfo);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public List<Customer> GetCustomers()
+        public List<Supplier> GetSuppliers()
         {
-            List<Customer> customers = new List<Customer>();
+            List<Supplier> suppliers = new List<Supplier>();
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT * FROM Customers";
+                string query = "SELECT * FROM Suppliers";
                 using (var cmd = new MySqlCommand(query, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        customers.Add(new Customer
+                        suppliers.Add(new Supplier
                         {
                             Id = reader.GetInt32("Id"),
                             Name = reader.GetString("Name"),
@@ -50,35 +50,35 @@ namespace Class_Files.Database
                     }
                 }
             }
-            return customers;
+            return suppliers;
         }
 
-        public void UpdateCustomer(Customer customer)
+        public void UpdateSupplier(Supplier supplier)
         {
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "UPDATE Customers SET Name=@Name, Address=@Address, ContactInfo=@ContactInfo WHERE Id=@Id";
+                string query = "UPDATE Suppliers SET Name=@Name, Address=@Address, ContactInfo=@ContactInfo WHERE Id=@Id";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", customer.Id);
-                    cmd.Parameters.AddWithValue("@Name", customer.Name);
-                    cmd.Parameters.AddWithValue("@Address", customer.Address);
-                    cmd.Parameters.AddWithValue("@ContactInfo", customer.ContactInfo);
+                    cmd.Parameters.AddWithValue("@Id", supplier.Id);
+                    cmd.Parameters.AddWithValue("@Name", supplier.Name);
+                    cmd.Parameters.AddWithValue("@Address", supplier.Address);
+                    cmd.Parameters.AddWithValue("@ContactInfo", supplier.ContactInfo);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public void DeleteCustomer(int customerId)
+        public void DeleteSupplier(int supplierId)
         {
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "DELETE FROM Customers WHERE Id=@Id";
+                string query = "DELETE FROM Suppliers WHERE Id=@Id";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", customerId);
+                    cmd.Parameters.AddWithValue("@Id", supplierId);
                     cmd.ExecuteNonQuery();
                 }
             }

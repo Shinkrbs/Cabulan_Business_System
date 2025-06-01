@@ -9,7 +9,7 @@ namespace Class_Files.Database
 {
     public class DatabaseConnection
     {
-        private string _connectionString = "server=localhost;database=ordering_system;user=root;password=;";
+        private string _connectionString = "server=localhost;database=cabulan_database;user=root;password=;";
         public MySqlConnection GetConnection()
         {
             return new MySqlConnection(_connectionString);
