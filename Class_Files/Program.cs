@@ -37,11 +37,11 @@ namespace Class_Files
 
             if (authService.Login(username, password))
             {
-                Console.WriteLine("✅ Login successful! Welcome, " + username);
+                Console.WriteLine("Login successful! Welcome, " + username);
             }
             else
             {
-                Console.WriteLine("❌ Invalid username or password.");
+                Console.WriteLine("Invalid username or password.");
             }
         }
     }
