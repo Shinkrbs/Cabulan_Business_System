@@ -1,0 +1,38 @@
+﻿<Window x:Class="App_Project.MainDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:App_Project"
+        mc:Ignorable="d"
+        Title="MainDashboard" Height="450" Width="800" Background="LightBlue">
+    
+    <Grid>
+        <!-- Main Card -->
+        <Border Background="White" CornerRadius="15" Padding="20" Width="600" Height="350"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <!-- Dashboard Title -->
+                <TextBlock Text="Main Dashboard" FontSize="24" FontWeight="Bold"
+                           HorizontalAlignment="Center" Margin="0,10,0,20"/>
+
+                <!-- Navigation Buttons -->
+                <Button Content="Manage Orders" Width="250" Height="50" Click="OpenOrders"
+                        Background="#0078D7" Foreground="White" FontWeight="Bold" Margin="5"/>
+
+                <Button Content="Manage Customers" Width="250" Height="50" Click="OpenCustomers"
+                        Background="#0078D7" Foreground="White" FontWeight="Bold" Margin="5"/>
+
+                <Button Content="Manage Employees" Width="250" Height="50" Click="OpenEmployees"
+                        Background="#0078D7" Foreground="White" FontWeight="Bold" Margin="5"/>
+
+                <Button Content="Manage Suppliers" Width="250" Height="50" Click="OpenSuppliers"
+                        Background="#0078D7" Foreground="White" FontWeight="Bold" Margin="5"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
