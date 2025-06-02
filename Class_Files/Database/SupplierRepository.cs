@@ -14,73 +14,102 @@ namespace Class_Files.Database
 
         public void AddSupplier(Supplier supplier)
         {
-            using (var conn = _db.GetConnection())
+            try
             {
-                conn.Open();
-                string query = "INSERT INTO Suppliers (Name, Address, ContactInfo) VALUES (@Name, @Address, @ContactInfo)";
-                using (var cmd = new MySqlCommand(query, conn))
+                using (var conn = _db.GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@Name", supplier.Name);
-                    cmd.Parameters.AddWithValue("@Address", supplier.Address);
-                    cmd.Parameters.AddWithValue("@ContactInfo", supplier.ContactInfo);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    string query = "INSERT INTO suppliers (name, address, contact_info) VALUES (@Name, @Address, @ContactInfo)";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", supplier.Name);
+                        cmd.Parameters.AddWithValue("@Address", supplier.Address);
+                        cmd.Parameters.AddWithValue("@ContactInfo", supplier.ContactInfo);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding supplier: {ex.Message}");
             }
         }
 
         public List<Supplier> GetSuppliers()
         {
             List<Supplier> suppliers = new List<Supplier>();
-            using (var conn = _db.GetConnection())
+            try
             {
-                conn.Open();
-                string query = "SELECT * FROM Suppliers";
-                using (var cmd = new MySqlCommand(query, conn))
-                using (var reader = cmd.ExecuteReader())
+                using (var conn = _db.GetConnection())
                 {
-                    while (reader.Read())
+                    conn.Open();
+                    string query = "SELECT * FROM suppliers";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        suppliers.Add(new Supplier
+                        while (reader.Read())
                         {
-                            Id = reader.GetInt32("Id"),
-                            Name = reader.GetString("Name"),
-                            Address = reader.GetString("Address"),
-                            ContactInfo = reader.GetString("ContactInfo")
-                        });
+                            suppliers.Add(new Supplier
+                            {
+                                Id = reader.GetInt32("Id"),
+                                Name = reader.GetString("name"), 
+                                Address = reader.GetString("address"), 
+                                ContactInfo = reader.GetString("contact_info") 
+                            });
+                        }
                     }
                 }
+                Console.WriteLine($"Retrieved {suppliers.Count} suppliers!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching suppliers: {ex.Message}");
             }
             return suppliers;
         }
 
         public void UpdateSupplier(Supplier supplier)
         {
-            using (var conn = _db.GetConnection())
+            try
             {
-                conn.Open();
-                string query = "UPDATE Suppliers SET Name=@Name, Address=@Address, ContactInfo=@ContactInfo WHERE Id=@Id";
-                using (var cmd = new MySqlCommand(query, conn))
+                using (var conn = _db.GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@Id", supplier.Id);
-                    cmd.Parameters.AddWithValue("@Name", supplier.Name);
-                    cmd.Parameters.AddWithValue("@Address", supplier.Address);
-                    cmd.Parameters.AddWithValue("@ContactInfo", supplier.ContactInfo);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    string query = "UPDATE suppliers SET name=@Name, address=@Address, contact_info=@ContactInfo WHERE Id=@Id";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", supplier.Id);
+                        cmd.Parameters.AddWithValue("@Name", supplier.Name);
+                        cmd.Parameters.AddWithValue("@Address", supplier.Address);
+                        cmd.Parameters.AddWithValue("@ContactInfo", supplier.ContactInfo);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating supplier: {ex.Message}");
             }
         }
 
         public void DeleteSupplier(int supplierId)
         {
-            using (var conn = _db.GetConnection())
+            try
             {
-                conn.Open();
-                string query = "DELETE FROM Suppliers WHERE Id=@Id";
-                using (var cmd = new MySqlCommand(query, conn))
+                using (var conn = _db.GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@Id", supplierId);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    string query = "DELETE FROM suppliers WHERE Id=@Id";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", supplierId);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting supplier: {ex.Message}");
             }
         }
     }

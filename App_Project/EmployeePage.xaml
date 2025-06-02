@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App_Project"
         mc:Ignorable="d"
-        Title="EmployeePage" Height="450" Width="800">
+        Title="EmployeePage" Height="640" Width="900" Background="LightBlue">
+    
     <Grid>
-        
+        <!-- Back Button -->
+        <Button Content="Back" Width="80" Height="35" Click="BackButton_Click"
+                Background="White" Foreground="Black" FontWeight="Bold" FontSize="14"
+                BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+
+        <!-- Main Card -->
+        <Border Background="White" CornerRadius="15" Padding="20" Width="600" Height="512"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <!-- Title -->
+                <TextBlock Text="Manage Employees" FontSize="24" FontWeight="Bold"
+                           HorizontalAlignment="Center" Margin="0,10,0,20"/>
+
+                <!-- Employee Data Grid -->
+                <DataGrid x:Name="EmployeeDataGrid" Width="533" Height="300" Margin="10"
+                          AutoGenerateColumns="False" HeadersVisibility="Column">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Employee ID" Binding="{Binding EmpId}" Width="*"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*"/>
+                        <DataGridTextColumn Header="Contact Info" Binding="{Binding ContactInfo}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Add Employee" Width="120" Height="40" Click="AddEmployee_Click"
+                            Background="#0078D7" Foreground="White" FontWeight="Bold" FontSize="15"
+                            BorderThickness="0" Margin="5"/>
+
+                    <Button Content="Update Employee" Width="143" Height="40" Click="UpdateEmployee_Click"
+                            Background="#FFC107" Foreground="Black" FontWeight="Bold" FontSize="15"
+                            BorderThickness="0" Margin="5"/>
+
+                    <Button Content="Delete Employee" Width="140" Height="40" Click="DeleteEmployee_Click"
+                            Background="#DC3545" Foreground="White" FontWeight="Bold" FontSize="15"
+                            BorderThickness="0" Margin="5"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+
+
     </Grid>
 </Window>

@@ -24,11 +24,15 @@ namespace App_Project
     {
         private OrderService _orderService = new OrderService();
         private CustomerRepository _customerRepo = new CustomerRepository();
+        private OrderRepository _orderRepo = new OrderRepository();
+        private EmployeeRepository _employeeRepo = new EmployeeRepository(); // ✅ Added Employee Repo
 
         public OrdersPage()
         {
             InitializeComponent();
             LoadCustomers();
+            LoadProducts(); // ✅ Ensure products are loaded
+            LoadEmployees(); // ✅ Ensure employees are loaded
             LoadOrders();
         }
 
@@ -40,31 +44,48 @@ namespace App_Project
             CustomerComboBox.SelectedValuePath = "Id";
         }
 
+        private void LoadProducts()
+        {
+            List<Product> products = _orderRepo.GetProducts();
+            ProductComboBox.ItemsSource = products;
+            ProductComboBox.DisplayMemberPath = "ProductName"; // ✅ Ensure product names are displayed
+            ProductComboBox.SelectedValuePath = "ProductId";
+        }
+
+        private void LoadEmployees()
+        {
+            List<Employee> employees = _employeeRepo.GetEmployees();
+            EmployeeComboBox.ItemsSource = employees;
+            EmployeeComboBox.DisplayMemberPath = "Name"; // ✅ Ensure employee names are displayed
+            EmployeeComboBox.SelectedValuePath = "EmpId";
+        }
+
         private void PlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (CustomerComboBox.SelectedValue == null || string.IsNullOrWhiteSpace(TotalAmountBox.Text))
+            if (CustomerComboBox.SelectedValue == null || ProductComboBox.SelectedValue == null || string.IsNullOrWhiteSpace(QuantityBox.Text) || EmployeeComboBox.SelectedValue == null)
             {
-                MessageBox.Show("Please select a customer and enter the total amount.", "Order Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("❌ Please select a customer, product, employee, and enter quantity.", "Order Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             int customerId = (int)CustomerComboBox.SelectedValue;
-            decimal totalAmount;
+            int productId = (int)ProductComboBox.SelectedValue;
+            int empId = (int)EmployeeComboBox.SelectedValue;
 
-            if (!decimal.TryParse(TotalAmountBox.Text, out totalAmount))
+            if (!int.TryParse(QuantityBox.Text, out int quantity))
             {
-                MessageBox.Show("Invalid amount format.", "Order Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("❌ Invalid quantity format.", "Order Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            _orderService.ProcessOrder(customerId, totalAmount);
-            MessageBox.Show("Order placed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            _orderService.ProcessOrder(customerId, productId, quantity, empId);
+            MessageBox.Show("✅ Order placed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            LoadOrders();
+            LoadOrders(); // ✅ Refresh order list after placing an order
         }
+
         private void LoadOrders()
         {
-            OrderRepository _orderRepo = new OrderRepository();
             List<Order> orders = _orderRepo.GetOrders();
 
             if (orders.Count == 0)
@@ -74,8 +95,39 @@ namespace App_Project
             }
             else
             {
-                OrderDataGrid.ItemsSource = orders; 
+                var enrichedOrders = orders.Select(o => new
+                {
+                    CustomerId = o.CustomerId,
+                    TotalAmount = o.TotalAmount,
+                }).ToList();
+
+                OrderDataGrid.ItemsSource = enrichedOrders;
             }
         }
+
+
+        private void CustomOrder_Click(object sender, RoutedEventArgs e)
+        {
+            CustomOrder customOrderWindow = new CustomOrder();
+            customOrderWindow.ShowDialog();
+        }
+
+        private void ProductComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProductComboBox.SelectedValue == null || string.IsNullOrWhiteSpace(QuantityBox.Text))
+                return;
+
+            int productId = (int)ProductComboBox.SelectedValue;
+            decimal price = _orderRepo.GetProductPrice(productId);
+            int quantity = int.Parse(QuantityBox.Text);
+
+            TotalAmountBox.Text = (price * quantity).ToString("₱0.00"); // ✅ Calculate total dynamically
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

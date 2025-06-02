@@ -99,6 +99,7 @@
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\Order.cs" />
+    <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\ProjectItem.cs" />
     <Compile Include="Classes\ProjectSupplier.cs" />
     <Compile Include="Classes\Supplier.cs" />

@@ -1,0 +1,126 @@
+﻿# USER MANUAL FOR INVENTORY & SUPPLIER MANAGEMENT SYSTEM
+
+## 1. Introduction
+This system is designed to efficiently manage **suppliers, employees, customers, orders, and inventory** for **Cabul-an Glass and Aluminum Supply Business**.  
+It provides functionalities to **create (add), read (view), update (edit), and delete records** within a structured database using MySQL.
+
+---
+
+## 2. Dashboard Navigation
+The **Main Dashboard** serves as the entry point for managing different sections of the system.
+
+### 📌 Navigation Buttons:
+- **Orders** → Opens the **Orders Page** to manage customer purchases.
+- **Customers** → Opens the **Customer Page** for handling customer records.
+- **Employees** → Opens the **Employee Page** for managing staff details.
+- **Suppliers** → Opens the **Supplier Page** for inventory restocking and supplier management.
+
+Clicking a button will open the respective management page for performing CRUD operations.
+
+---
+
+## 3. Supplier Management
+This section allows users to **create, read, update, and delete suppliers** for inventory restocking.
+
+### ✅ **Features & CRUD Operations**
+- **Create (Add Supplier)** → Opens a form to input `Name`, `Address`, and `Contact Info`.
+- **Read (View Suppliers)** → Displays the supplier list in the **DataGrid**.
+- **Update (Edit Supplier)** → Allows modifying supplier details.
+- **Delete (Remove Supplier)** → Permanently removes the selected supplier from the database.
+- **Contact Supplier** → Displays supplier contact info for restocking purposes, automatically messaging the supplier's contact number.
+
+### 🔧 **How to Use**
+1. Navigate to the **Supplier Page** via the **Main Dashboard**.
+2. View the list of suppliers in the **DataGrid**.
+3. Select a supplier and click the respective action button (`Update`, `Delete`, or `Contact`).
+
+---
+
+## 4. Employee Management
+The **Employee Page** lets users manage staff information.
+
+### ✅ **Features & CRUD Operations**
+- **Create (Add Employee)** → Opens a form to enter employee details (`Name`, `Position`, etc.).
+- **Read (View Employees)** → Displays employees in the **DataGrid**.
+- **Update (Edit Employee)** → Edits existing employee records.
+- **Delete (Remove Employee)** → Removes an employee from the database.
+
+### 🔧 **How to Use**
+1. Open the **Employee Page** via the dashboard.
+2. Select an employee from the **DataGrid**.
+3. Perform actions (`Update` or `Delete`) using the respective buttons.
+
+---
+
+## 5. Customer Management
+The **Customer Page** enables users to **create, view, update, and delete customer records**.
+
+### ✅ **Features & CRUD Operations**
+- **Create (Add Customer)** → Registers a new customer in the system.
+- **Read (View Customers)** → Displays all customers in the **DataGrid**.
+- **Update (Edit Customer)** → Modifies customer details.
+- **Delete (Remove Customer)** → Removes an inactive customer.
+
+### 🔧 **How to Use**
+1. Open **Customer Page** from the dashboard.
+2. Select a customer record from the **DataGrid**.
+3. Perform actions as needed (`Update` or `Delete`).
+
+---
+
+## 6. Order Management
+The **Orders Page** tracks **customer purchases and inventory updates**.
+
+### ✅ **Features & CRUD Operations**
+- **Create (Place Order)** → Allows customers to place new orders.
+- **Read (View Orders)** → Displays a list of placed orders.
+- **Update (Modify Orders)** → Allows changes to existing orders.
+- **Delete (Cancel Order)** → Removes an order if necessary.
+- **Process Orders** → Updates inventory stock automatically when purchases are confirmed.
+
+### 🔧 **How to Use**
+1. Open **Orders Page**.
+2. View the list of orders through **Customer ID**.
+3. Place **Project Orders (commissions)** or **Order Items (regular orders)**.
+4. Modify or process orders as needed.
+
+---
+
+## 7. Inventory Tracking
+The system **tracks product stock levels** using `StockQuantity` in the database.
+
+### ✅ **Features & CRUD Operations**
+- **Create (Add Inventory Data)** → Allows the entry of new products and stock levels.
+- **Read (View Inventory Levels)** → Displays current supply counts in the system.
+- **Update (Modify Stock Levels)** → Automatically decreases stock when purchases occur.
+- **Delete (Remove Inventory Data)** → Allows removal of discontinued products.
+- **Restock Notification** → Alerts users when supply levels are low.
+
+### 🔧 **How to Use**
+1. Navigate to the **Supplier Page**.
+2. View current stock levels.
+3. Contact suppliers for **inventory restocking**.
+
+---
+
+## 8. Error Handling & Debugging
+If an issue occurs (e.g., missing data or errors), check the **Console Output** for debugging logs.
+
+### ✅ **Common Fixes**
+- **Supplier Not Updating?** → Ensure `LoadSuppliers()` correctly refreshes the **DataGrid** after modifications.
+- **Employee Not Deleting?** → Verify `DeleteEmployee()` correctly removes entries from the database.
+- **Orders Not Loading?** → Confirm `GetOrders()` correctly retrieves order data.
+
+Use system logs for detailed error messages.
+
+---
+
+## 9. Future Enhancements
+Potential upgrades to improve functionality:
+- **Search & Filtering** → Easily find suppliers, customers, employees, or orders by name or ID.
+- **Sorting Functionality** → Auto-sort suppliers/employees/orders based on criteria (e.g., alphabetical, by ID, by recent activity).
+- **Email Integration** → Directly message suppliers for inventory restocking.
+
+---
+
+# END OF USER MANUAL
