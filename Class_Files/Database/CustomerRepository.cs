@@ -42,7 +42,7 @@ namespace Class_Files.Database
                     {
                         customers.Add(new Customer
                         {
-                            Id = reader.GetInt32("Id"),
+                            Id = reader.GetInt32("CustomerId"),
                             Name = reader.GetString("Name"),
                             Address = reader.GetString("Address"),
                             ContactInfo = reader.GetString("ContactInfo")
@@ -58,10 +58,10 @@ namespace Class_Files.Database
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "UPDATE Customers SET Name=@Name, Address=@Address, ContactInfo=@ContactInfo WHERE Id=@Id";
+                string query = "UPDATE Customers SET Name=@Name, Address=@Address, ContactInfo=@ContactInfo WHERE CustomerId=@CustomerId";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", customer.Id);
+                    cmd.Parameters.AddWithValue("@CustomerId", customer.Id);
                     cmd.Parameters.AddWithValue("@Name", customer.Name);
                     cmd.Parameters.AddWithValue("@Address", customer.Address);
                     cmd.Parameters.AddWithValue("@ContactInfo", customer.ContactInfo);
@@ -75,10 +75,10 @@ namespace Class_Files.Database
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "DELETE FROM Customers WHERE Id=@Id";
+                string query = "DELETE FROM Customers WHERE CustomerId=@CustomerId";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Id", customerId);
+                    cmd.Parameters.AddWithValue("@CustomerId", customerId);
                     cmd.ExecuteNonQuery();
                 }
             }

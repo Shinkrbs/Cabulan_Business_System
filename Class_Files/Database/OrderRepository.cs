@@ -12,7 +12,7 @@ namespace Class_Files.Database
     {
         private DatabaseConnection _db = new DatabaseConnection();
 
-        // ✅ Updated: Places an order with product price dynamically retrieved
+        // ✅ Updated: Places an order with correct column references
         public void PlaceOrder(int customerId, decimal totalAmount, int productId, int quantity, int empId)
         {
             using (var conn = _db.GetConnection())
@@ -20,7 +20,7 @@ namespace Class_Files.Database
                 conn.Open();
 
                 // Insert order first
-                string orderQuery = "INSERT INTO order_projects (customer_id, order_date, total_amount) VALUES (@CustomerId, @OrderDate, @TotalAmount)";
+                string orderQuery = "INSERT INTO order_projects (CustomerId, OrderDate, TotalAmount) VALUES (@CustomerId, @OrderDate, @TotalAmount)";
                 using (var orderCmd = new MySqlCommand(orderQuery, conn))
                 {
                     orderCmd.Parameters.AddWithValue("@CustomerId", customerId);
@@ -39,7 +39,7 @@ namespace Class_Files.Database
                 decimal price = GetProductPrice(productId);
 
                 // Insert product linked to this order
-                string itemQuery = "INSERT INTO project_items (order_id, product_id, price, quantity, emp_id) VALUES (@OrderId, @ProductId, @Price, @Quantity, @EmpId)";
+                string itemQuery = "INSERT INTO ProjectItems (OrderId, ProductId, Price, Quantity, EmpId) VALUES (@OrderId, @ProductId, @Price, @Quantity, @EmpId)";
                 using (var itemCmd = new MySqlCommand(itemQuery, conn))
                 {
                     itemCmd.Parameters.AddWithValue("@OrderId", orderId);
@@ -52,8 +52,7 @@ namespace Class_Files.Database
             }
         }
 
-
-        // Retrieve all orders with customer ID & total amount
+        // ✅ Updated: Retrieves orders with correct column name
         public List<Order> GetOrders()
         {
             List<Order> orders = new List<Order>();
@@ -70,9 +69,9 @@ namespace Class_Files.Database
                         orders.Add(new Order
                         {
                             Id = reader.GetInt32("Id"),
-                            CustomerId = reader.GetInt32("customer_id"),
-                            OrderDate = reader.GetDateTime("order_date"),
-                            TotalAmount = reader.GetDecimal("total_amount")
+                            CustomerId = reader.GetInt32("CustomerId"), // Updated column name
+                            OrderDate = reader.GetDateTime("OrderDate"),
+                            TotalAmount = reader.GetDecimal("TotalAmount")
                         });
                     }
                 }
@@ -80,7 +79,7 @@ namespace Class_Files.Database
             return orders;
         }
 
-        // Retrieves product NAMES instead of IDs for a specific order
+        // ✅ Updated: Retrieves product names from orders correctly
         public string GetProductsForOrder(int orderId)
         {
             using (var conn = _db.GetConnection())
@@ -89,8 +88,8 @@ namespace Class_Files.Database
                 string query = @"
                     SELECT GROUP_CONCAT(p.ProductName SEPARATOR ', ') 
                     FROM project_items pi 
-                    JOIN products p ON pi.product_id = p.ProductId 
-                    WHERE pi.order_id = @OrderId";
+                    JOIN products p ON pi.ProductId = p.ProductId 
+                    WHERE pi.OrderId = @OrderId";
 
                 using (var cmd = new MySqlCommand(query, conn))
                 {
@@ -101,8 +100,7 @@ namespace Class_Files.Database
             }
         }
 
-
-        // New Method: Retrieve product price dynamically
+        // ✅ Fetches product price dynamically
         public decimal GetProductPrice(int productId)
         {
             using (var conn = _db.GetConnection())
@@ -118,7 +116,7 @@ namespace Class_Files.Database
             }
         }
 
-        // Retrieves all products for dropdown selection
+        // ✅ Retrieves all products for selection
         public List<Product> GetProducts()
         {
             List<Product> products = new List<Product>();
@@ -126,7 +124,7 @@ namespace Class_Files.Database
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "SELECT ProductId, ProductName, Price, StockQuantity FROM Products"; 
+                string query = "SELECT ProductId, ProductName, Price, StockQuantity FROM Products";
                 using (var cmd = new MySqlCommand(query, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -137,7 +135,7 @@ namespace Class_Files.Database
                             ProductId = reader.GetInt32("ProductId"),
                             ProductName = reader.GetString("ProductName"),
                             Price = reader.GetDecimal("Price"),
-                            StockQuantity = reader.GetInt32("StockQuantity") 
+                            StockQuantity = reader.GetInt32("StockQuantity")
                         });
                     }
                 }
@@ -145,7 +143,7 @@ namespace Class_Files.Database
             return products;
         }
 
-        // Retrieve last order ID for custom order linking
+        // ✅ Retrieves last order ID with correct column reference
         public int GetLastOrderId()
         {
             using (var conn = _db.GetConnection())

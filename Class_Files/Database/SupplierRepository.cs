@@ -19,7 +19,7 @@ namespace Class_Files.Database
                 using (var conn = _db.GetConnection())
                 {
                     conn.Open();
-                    string query = "INSERT INTO suppliers (name, address, contact_info) VALUES (@Name, @Address, @ContactInfo)";
+                    string query = "INSERT INTO suppliers (Name, Address, ContactInfo) VALUES (@Name, @Address, @ContactInfo)";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", supplier.Name);
@@ -52,9 +52,9 @@ namespace Class_Files.Database
                             suppliers.Add(new Supplier
                             {
                                 Id = reader.GetInt32("Id"),
-                                Name = reader.GetString("name"), 
-                                Address = reader.GetString("address"), 
-                                ContactInfo = reader.GetString("contact_info") 
+                                Name = reader.GetString("Name"), 
+                                Address = reader.GetString("Address"), 
+                                ContactInfo = reader.GetString("ContactInfo") 
                             });
                         }
                     }
@@ -75,7 +75,7 @@ namespace Class_Files.Database
                 using (var conn = _db.GetConnection())
                 {
                     conn.Open();
-                    string query = "UPDATE suppliers SET name=@Name, address=@Address, contact_info=@ContactInfo WHERE Id=@Id";
+                    string query = "UPDATE suppliers SET name=@Name, address=@Address, ContactInfo=@ContactInfo WHERE Id=@Id";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Id", supplier.Id);
