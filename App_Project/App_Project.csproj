@@ -119,6 +119,9 @@
     <Compile Include="CustomOrder.xaml.cs">
       <DependentUpon>CustomOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomOrdersTableWindow.xaml.cs">
+      <DependentUpon>CustomOrdersTableWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeleteCustomer.xaml.cs">
       <DependentUpon>DeleteCustomer.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,9 @@
     </Compile>
     <Compile Include="UpdateCustomer.xaml.cs">
       <DependentUpon>UpdateCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCustomOrder.xaml.cs">
+      <DependentUpon>UpdateCustomOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateEmployee.xaml.cs">
       <DependentUpon>UpdateEmployee.xaml</DependentUpon>
@@ -151,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomOrdersTableWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateCustomOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

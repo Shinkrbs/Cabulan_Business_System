@@ -1,0 +1,57 @@
+﻿<Window x:Class="App_Project.CustomOrdersTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:App_Project"
+        mc:Ignorable="d"
+        Title="CustomOrdersTableWindow" Height="650" Width="800">
+
+    <Grid Background="LightBlue" Margin="0,0,-20,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="87*"/>
+            <ColumnDefinition Width="88*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Back Button -->
+        <Button Content="Back" Width="80" Height="35" Click="BackButton_Click"
+                Background="White" Foreground="Black" FontWeight="Bold" FontSize="17"
+                BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+
+        <!-- Main Card -->
+        <Border Background="White" CornerRadius="15" Padding="20" Width="729" Height="426"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="50,0,0,0">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <!-- Title -->
+                <TextBlock Text="Manage Custom Orders" FontSize="24" FontWeight="Bold"
+                           HorizontalAlignment="Center" Margin="0,10,0,20"/>
+
+                <!-- Orders Data Grid -->
+                <DataGrid x:Name="OrdersDataGrid" Width="550" Height="250" Margin="10"
+                          AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single"
+                          IsReadOnly="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Description" Binding="{Binding ProductDescription}" Width="*" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="150" />
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Update Order" Width="120" Height="35" Click="UpdateOrder_Click"
+                            Background="#FFC107" Foreground="Black" FontWeight="Bold" FontSize="14"
+                            BorderThickness="0" Margin="5"/>
+
+                    <Button Content="Delete Order" Width="120" Height="35" Click="DeleteOrder_Click"
+                            Background="#DC3545" Foreground="White" FontWeight="Bold" FontSize="14"
+                            BorderThickness="0" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

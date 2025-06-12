@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\shin\Documents\Cabulak\App_Project\App.xaml
-14179177803
+16702967059
 
-191524684417
+211811475249
 341125124273
-AddCustomer.xaml;AddEmployee.xaml;AddSupplier.xaml;CustomerPage.xaml;CustomOrder.xaml;DeleteCustomer.xaml;EmployeePage.xaml;MainDashboard.xaml;MainWindow.xaml;OrdersPage.xaml;SupplierPage.xaml;UpdateCustomer.xaml;UpdateEmployee.xaml;UpdateSupplier.xaml;
+AddCustomer.xaml;AddEmployee.xaml;AddSupplier.xaml;CustomerPage.xaml;CustomOrder.xaml;CustomOrdersTableWindow.xaml;DeleteCustomer.xaml;EmployeePage.xaml;MainDashboard.xaml;MainWindow.xaml;OrdersPage.xaml;SupplierPage.xaml;UpdateCustomer.xaml;UpdateCustomOrder.xaml;UpdateEmployee.xaml;UpdateSupplier.xaml;
 
 True
 

@@ -23,13 +23,11 @@ namespace App_Project
     {
         private EmployeeRepository _employeeRepo = new EmployeeRepository();
         private CustomerRepository _customerRepo = new CustomerRepository();
-        private OrderRepository _orderRepo = new OrderRepository();
 
         public CustomOrder()
         {
             InitializeComponent();
             LoadCustomers();
-            LoadProducts();
             LoadEmployees();
         }
 
@@ -39,14 +37,6 @@ namespace App_Project
             CustomerComboBox.ItemsSource = customers;
             CustomerComboBox.DisplayMemberPath = "Name";
             CustomerComboBox.SelectedValuePath = "Id";
-        }
-
-        private void LoadProducts()
-        {
-            List<Product> products = _orderRepo.GetProducts();
-            ProductComboBox.ItemsSource = products;
-            ProductComboBox.DisplayMemberPath = "ProductName";
-            ProductComboBox.SelectedValuePath = "ProductId";
         }
 
         private void LoadEmployees()
@@ -59,25 +49,77 @@ namespace App_Project
 
         private void ConfirmCustomOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (CustomerComboBox.SelectedValue == null || ProductComboBox.SelectedValue == null || EmployeeComboBox.SelectedValue == null || string.IsNullOrWhiteSpace(QuantityBox.Text))
+            if (CustomerComboBox.SelectedValue == null ||
+                EmployeeComboBox.SelectedValue == null ||
+                string.IsNullOrWhiteSpace(CustomOrderBox.Text) ||
+                string.IsNullOrWhiteSpace(PriceBox.Text) ||
+                string.IsNullOrWhiteSpace(QuantityBox.Text))
             {
-                MessageBox.Show("Please select a customer, product, employee, and enter quantity.", "Order Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please fill in all fields before submitting.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            int orderId = _orderRepo.GetLastOrderId(); // 
-            int productId = (int)ProductComboBox.SelectedValue;
+            string description = CustomOrderBox.Text;
+            if (!decimal.TryParse(PriceBox.Text, out decimal price) || price < 0)
+            {
+                MessageBox.Show("Invalid price input.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!int.TryParse(QuantityBox.Text, out int quantity) || quantity < 1)
+            {
+                MessageBox.Show("Invalid quantity.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             int empId = (int)EmployeeComboBox.SelectedValue;
-            int quantity = int.Parse(QuantityBox.Text);
 
-            _customerRepo.AddCustomOrder(orderId, productId, quantity, empId); 
+            // You can swap this to a more appropriate repository if needed
+            bool success = _customerRepo.AddProjectItem(description, price, quantity, empId);
 
-            MessageBox.Show("✅ Custom order placed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (success)
+            {
+                MessageBox.Show("Custom order placed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClearFields();
+            }
+            else
+            {
+                MessageBox.Show("Failed to place custom order.", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ClearFields()
+        {
+            CustomOrderBox.Text = string.Empty;
+            PriceBox.Text = string.Empty;
+            QuantityBox.Text = string.Empty;
+            EmployeeComboBox.SelectedIndex = -1;
+            CustomerComboBox.SelectedIndex = -1;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close(); 
+            this.Close();
         }
+
+        // Allows only numeric input (e.g., for Quantity)
+        private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !int.TryParse(e.Text, out _);
+        }
+
+        // Allows decimal input (e.g., for Price)
+        private void DecimalOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            string currentText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
+            e.Handled = !decimal.TryParse(currentText, out _);
+        }
+        private void ViewOrders_Click(object sender, RoutedEventArgs e)
+        {
+            var ordersWindow = new CustomOrdersTableWindow(); // you'll create this window next
+            ordersWindow.ShowDialog();
+        }
+
     }
 }

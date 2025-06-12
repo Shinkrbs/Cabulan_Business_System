@@ -132,43 +132,25 @@ namespace Class_Files.Database
         }
 
         // ✅ New Method: Add a custom order linked to a customer
-        public void AddCustomOrder(int orderId, int productId, int quantity, int empId)
+        public bool AddProjectItem(string description, decimal price, int quantity, int empId)
         {
             using (var conn = _db.GetConnection())
             {
-                conn.Open();
+                string query = @"INSERT INTO ProjectItems (ProductDescription, Price, Quantity, EmpId)
+                         VALUES (@desc, @price, @qty, @empId)";
 
-                // Get product price dynamically from `Products` table
-                decimal price = GetProductPrice(productId);
-
-                // Insert custom order into `project_items`
-                string query = "INSERT INTO project_items (order_id, product_id, price, quantity, emp_id) VALUES (@OrderId, @ProductId, @Price, @Quantity, @EmpId)";
                 using (var cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@OrderId", orderId);
-                    cmd.Parameters.AddWithValue("@ProductId", productId);
-                    cmd.Parameters.AddWithValue("@Price", price);
-                    cmd.Parameters.AddWithValue("@Quantity", quantity);
-                    cmd.Parameters.AddWithValue("@EmpId", empId);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@desc", description);
+                    cmd.Parameters.AddWithValue("@price", price);
+                    cmd.Parameters.AddWithValue("@qty", quantity);
+                    cmd.Parameters.AddWithValue("@empId", empId);
+
+                    conn.Open();
+                    return cmd.ExecuteNonQuery() > 0;
                 }
             }
         }
 
-        // ✅ Fetch product price dynamically
-        private decimal GetProductPrice(int productId)
-        {
-            using (var conn = _db.GetConnection())
-            {
-                conn.Open();
-                string query = "SELECT Price FROM Products WHERE ProductId = @ProductId";
-                using (var cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@ProductId", productId);
-                    object result = cmd.ExecuteScalar();
-                    return result != null ? Convert.ToDecimal(result) : 0;
-                }
-            }
-        }
     }
 }

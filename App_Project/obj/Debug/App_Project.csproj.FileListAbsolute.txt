@@ -76,3 +76,7 @@ C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\AddSupplier.g.cs
 C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\UpdateSupplier.g.cs
 C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\AddSupplier.baml
 C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\UpdateSupplier.baml
+C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\CustomOrdersTableWindow.g.cs
+C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\CustomOrdersTableWindow.baml
+C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\UpdateCustomOrder.g.cs
+C:\Users\shin\Documents\Cabulak\App_Project\obj\Debug\UpdateCustomOrder.baml

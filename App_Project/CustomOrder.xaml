@@ -5,48 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:App_Project"
         mc:Ignorable="d"
-        Title="CustomOrder" Height="500" Width="900" Background="LightBlue">
+        Title="CustomOrder" Height="750" Width="900" Background="LightBlue">
 
     <Grid>
         <!-- Back Button -->
         <Button Content="Back" Width="80" Height="35" Click="BackButton_Click"
-            Background="White" Foreground="Black" FontWeight="Bold" FontSize="17"
-            BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+                Background="White" Foreground="Black" FontWeight="Bold" FontSize="17"
+                BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
 
         <!-- Main Card -->
-            <Border Background="White" CornerRadius="15" Padding="20" Width="600" Height="426"
-                    VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="5" Opacity="0.3"/>
-                </Border.Effect>
+        <Border Background="White" CornerRadius="15" Padding="20" Width="600" Height="632"
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Direction="270" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
 
             <StackPanel>
                 <!-- Title -->
                 <TextBlock Text="Custom Order" FontSize="24" FontWeight="Bold"
-                            HorizontalAlignment="Center" Margin="0,10,0,20"/>
+                           HorizontalAlignment="Center" Margin="0,10,0,20"/>
 
-            <!-- Customer Selection -->
-            <TextBlock Text="Select Customer" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
-            <ComboBox x:Name="CustomerComboBox" Width="250" Height="25" Margin="10"/>
+                <!-- Customer Selection -->
+                <TextBlock Text="Select Customer" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                <ComboBox x:Name="CustomerComboBox" Width="250" Height="25" Margin="10"/>
 
-            <!-- Product Selection -->
-            <TextBlock Text="Select Product" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
-            <ComboBox x:Name="ProductComboBox" Width="250" Height="25" Margin="10"/>
+                <!-- Order Description -->
+                <TextBlock Text="Input Custom Order Description" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                <TextBox x:Name="CustomOrderBox" Width="358" Height="114" Margin="10" TextWrapping="Wrap" AcceptsReturn="True"/>
 
-            <!-- Quantity Input -->
-            <TextBlock Text="Quantity" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
-            <TextBox x:Name="QuantityBox" Width="250" Height="22" Margin="10"/>
+                <!-- Price Input -->
+                <TextBlock Text="Price" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                <TextBox x:Name="PriceBox" Width="250" Height="22" Margin="10" PreviewTextInput="DecimalOnly_PreviewTextInput"/>
 
-            <!-- Employee Selection -->
-            <TextBlock Text="Assign Employee" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
-            <ComboBox x:Name="EmployeeComboBox" Width="250" Height="25" Margin="10"/>
+                <!-- Quantity Input -->
+                <TextBlock Text="Quantity" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                <TextBox x:Name="QuantityBox" Width="250" Height="22" Margin="10" PreviewTextInput="NumberOnly_PreviewTextInput"/>
 
-            <!-- Place Custom Order Button -->
-            <Button Content="Confirm Custom Order" Width="200" Height="40" Click="ConfirmCustomOrder_Click"
-                                Background="#28A745" Foreground="White" FontWeight="Bold" FontSize="15"
-                                BorderThickness="0" HorizontalAlignment="Center" Margin="10"/>
+                <!-- Employee Selection -->
+                <TextBlock Text="Assign Employee" FontSize="16" FontWeight="SemiBold" Margin="10,0,0,0"/>
+                <ComboBox x:Name="EmployeeComboBox" Width="250" Height="25" Margin="10"/>
+
+                <!-- Confirmation Button -->
+                <Button Content="Confirm Custom Order" Width="200" Height="40" Click="ConfirmCustomOrder_Click"
+                        Background="#28A745" Foreground="White" FontWeight="Bold" FontSize="15"
+                        BorderThickness="0" HorizontalAlignment="Center" Margin="10"/>
+
+                <!-- Feedback TextBlock -->
+                <TextBlock x:Name="FeedbackTextBlock" Text="" Foreground="Green" FontWeight="Bold" 
+                        FontSize="14" TextAlignment="Center" Margin="10" Visibility="Collapsed"/>
+
+                <!-- View Custom Orders Button -->
+                <Button Content="View Custom Orders" Width="200" Height="35" Click="ViewOrders_Click"
+                    Background="#007BFF" Foreground="White" FontWeight="Bold" FontSize="14"
+                    BorderThickness="0" HorizontalAlignment="Center" Margin="5"/>
+
             </StackPanel>
         </Border>
-
     </Grid>
 </Window>
