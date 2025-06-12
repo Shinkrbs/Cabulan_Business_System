@@ -75,8 +75,55 @@ namespace Class_Files.Database
             using (var conn = _db.GetConnection())
             {
                 conn.Open();
-                string query = "DELETE FROM Customers WHERE CustomerId=@CustomerId";
-                using (var cmd = new MySqlCommand(query, conn))
+
+                // Get all OrderIds for this Customer
+                List<int> orderIds = new List<int>();
+                string getOrders = "SELECT Id FROM order_projects WHERE CustomerId = @CustomerId";
+                using (var getCmd = new MySqlCommand(getOrders, conn))
+                {
+                    getCmd.Parameters.AddWithValue("@CustomerId", customerId);
+                    using (var reader = getCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            orderIds.Add(reader.GetInt32("Id"));
+                        }
+                    }
+                }
+
+                // Delete from projectsuppliers linked to each order
+                foreach (var orderId in orderIds)
+                {
+                    string deleteSuppliers = "DELETE FROM projectsuppliers WHERE OrderId = @OrderId";
+                    using (var cmd = new MySqlCommand(deleteSuppliers, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@OrderId", orderId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // Delete from ProjectItems
+                foreach (var orderId in orderIds)
+                {
+                    string deleteItems = "DELETE FROM ProjectItems WHERE OrderId = @OrderId";
+                    using (var cmd = new MySqlCommand(deleteItems, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@OrderId", orderId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // Delete from order_projects
+                string deleteOrders = "DELETE FROM order_projects WHERE CustomerId = @CustomerId";
+                using (var cmd = new MySqlCommand(deleteOrders, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CustomerId", customerId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete the customer
+                string deleteCustomer = "DELETE FROM Customers WHERE CustomerId = @CustomerId";
+                using (var cmd = new MySqlCommand(deleteCustomer, conn))
                 {
                     cmd.Parameters.AddWithValue("@CustomerId", customerId);
                     cmd.ExecuteNonQuery();
